@@ -227,7 +227,7 @@
         className: null,
         delayIn: 0,
         delayOut: 0,
-        fade: false,
+        fade: true,
         fallback: '',
         gravity: 'n',
         html: false,

@@ -7,6 +7,8 @@ var gameHistoryLength = [];
 for (var i = 1; i <= gameCount; i++) {
     gameHistoryLength.push(i);
 }
+var w = $(document).width() -200,
+    h = $(document).height() / 2;
 
 var maxDataPointsForDots = 50,
 	transitionDuration = 1000;
@@ -18,8 +20,6 @@ var svg = null,
 	dataLinesGroup = null;
 
 function draw() {
-	var w = $(document).width() -200,
-    	h = $(document).height() / 2;
 	var data = getData();
 	var rankrange = rankChange();
 	var margin = 40;
@@ -171,7 +171,7 @@ function draw() {
         title: function() {
           var d = this.__data__;
 	  var pDate = d.date;
-          return 'Date: ' + pDate.getDate() + " " + pDate.getMonth() + " " + pDate.getFullYear() + '<br/>Rank: ' + d.value + '<br/>Result:' + d.result + '<br/>Opponent: ' + d.opponent; 
+          return d.gamelink + '<br />Date: ' + pDate.getDate() + " " + pDate.getMonth() + " " + pDate.getFullYear() + '<br />Rank: ' + d.value + '<br />Result:' + d.result + '<br />Opponent: ' + d.opponent; 
         }
       });
 }
@@ -218,6 +218,7 @@ function getData() {
 	
 
 	for(x = gameCount; x >= 1; x--) {
+		var gamelink = '<a href="http://beta.kaya.gs/gospeed/3588" target="_blank">View Game</a>';	// Game link
 		var date = new Date(); 													// Game Date
 		var newrank = ranges[Math.floor(Math.random()*ranges.length)];			// New Rank
 		var result 	= results[Math.floor(Math.random()*results.length)];		// Result
@@ -226,7 +227,7 @@ function getData() {
 		date.setDate(date.getDate() - x);
 		date.setHours(0, 0, 0, 0);
 
-		resultsArray.push({'value' : (newrank-5), 'date' : date, 'result' : result, 'opponent' : opponent});
+		resultsArray.push({'gamelink' : gamelink,'value' : (newrank-5), 'date' : date, 'result' : result, 'opponent' : opponent});
 	}
 	// End fake data
 
@@ -237,7 +238,6 @@ function doProgressBar() {
 	var rankchange = rankChange();
 	var currank = String(rankchange.current);
 	var progress = Number(currank.substr(currank.length -2));
-	console.log(progress);
 	$("#progressbar").progressbar({ value: progress });
 	$("#progressbar-title span").html("");
 	$("#progressbar-title span").append(progress + "% (" + rankchange.current + ")")
