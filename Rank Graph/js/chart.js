@@ -1,6 +1,7 @@
+var rankgraph = function(gamecount){ 
 
-
-var gameCount = 20;
+var gameCount = gamecount || 30;
+alert(gameCount);
 var rankGraphPadding = 3;
 
 var gameHistoryLength = [];
@@ -19,7 +20,7 @@ var svg = null,
 	dataCirclesGroup = null,
 	dataLinesGroup = null;
 
-function draw() {
+this.draw = function() {
 	var data = getData();
 	var rankrange = rankChange();
 	var margin = 40;
@@ -247,7 +248,5 @@ d3.select('#button').on('click', function() {
 	draw();
 	doProgressBar();
 });
-draw();
 doProgressBar();
-$(window).resize(function() { draw(); });
-
+};
