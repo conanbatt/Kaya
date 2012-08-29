@@ -42,3 +42,18 @@ line {
 body { overflow: hidden; }
 
 #progressbar { margin: 20px 225px 0px 35px; }
+.hidden { display: none; }
+
+#ranksettings .warn { 
+	font-size: 12px; 
+	color: red; 
+}
+
+#ranksettings label { 
+	float: left; 
+	width: 150px; 
+}
+
+div.ui-datepicker{
+ font-size:10px;
+}

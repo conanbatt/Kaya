@@ -4,7 +4,6 @@
         <title>Rank Graph</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../qunit/qunit.css" type="text/css" media="screen">
-        <script type="text/javascript" src="../jquery.min.js"></script>
         <script type="text/javascript" src="../qunit/qunit.js"></script>
         <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
         <link type="text/css" href="css/chart.css" rel="stylesheet" />
@@ -12,6 +11,32 @@
         <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.23.custom.min.js"></script>
         <script type="text/javascript" src="js/d3.v2.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+                $("#gamecount").keydown(function(event) {
+                    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+                         // Allow: Ctrl+A
+                        (event.keyCode == 65 && event.ctrlKey === true) || 
+                         // Allow: home, end, left, right
+                        (event.keyCode >= 35 && event.keyCode <= 39)) {
+                             return;
+                    }
+                    else {
+                        // Ensure that it is a number and stop the keypress
+                        if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+                            event.preventDefault(); 
+                            $('#gamecountwarn').fadeIn();
+                            setTimeout(function(){
+                                $('#gamecountwarn').delay(300).fadeOut('slow');
+                            }, 1000);
+                        }   
+                    }
+                });
+                $(function() {
+                        $( ".datepicker" ).datepicker();
+                });
+        });
+        </script>
 </head>
 <body>
         <h1 id="qunit-header">Rank Graph</h1>
@@ -20,12 +45,23 @@
         <h2 id="qunit-userAgent"></h2>
         <ol id="qunit-tests"></ol>
         <div id="qunit-fixture">test markup</div>
-        <div id="progressbar-container">
+        <!-- <div id="progressbar-container">
                 <h3 id="progressbar-title">Progress to next rank <span></span><h3>
                 <div id="progressbar"></div>
-        </div>
+        </div> -->
         <div id="chart-container">
                 <h3 id="chart-title">Bar chart<h3>
+                        <div id="settings">
+                                <form method="post" action"" id="ranksettings">
+                                        <label for="start">Start: </label>
+                                        <input class="datepicker" type="text" value="" id="start" name="start" /><br />
+                                        <label for="end">End: </label><input class="datepicker" type="text" value="" id="end" name="end" /><br />
+                                        <label for="gamecount">Gamecount:</label>
+                                        <input type="text/javascript" name="gamecount" id="gamecount" value="" /><span id="gamecountwarn" class="hidden warn"> Numbers only my friend!</span> 
+
+                                        <input type="submit" value="Go" />
+                                </form>
+                        </div>
                 <div id="user-chart"></div>
         </div>
 
