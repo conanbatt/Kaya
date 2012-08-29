@@ -7,10 +7,11 @@ var rankgraph = function(gamecount) {
 		for (var i = 1; i <= gameCount; i++) {
 			gameHistoryLength.push(i);
 		}
-		var w = $(document).width() - 200,
+
+		var w = $("#user-chart").width(),
 			h = $(document).height() / 2;
 
-		var maxDataPointsForDots = 50,
+		var maxDataPointsForDots = ($("#user-chart").width()/6),
 			transitionDuration = 1000;
 
 		var svg = null,
@@ -21,6 +22,7 @@ var rankgraph = function(gamecount) {
 
 		this.draw = function() {
 			var data = getData();
+			console.log(data);
 			var rankrange = rankChange();
 			var margin = 40;
 			var max = (rankrange.biggest + rankGraphPadding);
@@ -127,6 +129,7 @@ var rankgraph = function(gamecount) {
 
 			$('svg circle').tipsy({
 				gravity: 'w',
+				opacity: 1,
 				html: true,
 				title: function() {
 					var d = this.__data__;
@@ -213,11 +216,7 @@ var rankgraph = function(gamecount) {
 			$("#progressbar-title span").append(progress + "% (" + rankchange.current + ")")
 		}
 
-		d3.select('#button').on('click', function() {
-			draw();
-			doProgressBar();
-		});
-		doProgressBar();
+
 	};
 
 function graphSettings(e) {

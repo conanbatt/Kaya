@@ -35,6 +35,12 @@
                 $(function() {
                         $( ".datepicker" ).datepicker();
                 });
+
+                $(".datepicker").focus( function () { $("#datepicked").fadeIn().html('Clear dates<br />'); });
+                $("#datepicked").click( function () { 
+                    $(this).html('').hide(); 
+                    $(".datepicker").val('');
+                });
         });
         </script>
 </head>
@@ -50,15 +56,15 @@
                 <div id="progressbar"></div>
         </div> -->
         <div id="chart-container">
-                <h3 id="chart-title">Bar chart<h3>
+                <h3 id="chart-title">Rating Graph<h3>
                         <div id="settings">
                                 <form method="post" action"" id="ranksettings">
                                         <label for="start">Start: </label>
                                         <input class="datepicker" type="text" value="" id="start" name="start" /><br />
                                         <label for="end">End: </label><input class="datepicker" type="text" value="" id="end" name="end" /><br />
+                                        <span class="field-message hidden" id="datepicked"></span>
                                         <label for="gamecount">Gamecount:</label>
-                                        <input type="text/javascript" name="gamecount" id="gamecount" value="" /><span id="gamecountwarn" class="hidden warn"> Numbers only my friend!</span> 
-
+                                        <input type="text/javascript" name="gamecount" id="gamecount" value="" /><span id="gamecountwarn" class="hidden warn"> Numbers only my friend!</span><br />
                                         <input type="submit" value="Go" />
                                 </form>
                         </div>

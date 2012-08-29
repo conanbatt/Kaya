@@ -1,5 +1,5 @@
 .data-line {
-	stroke: steelblue;
+	stroke: green;
 	stroke-width: 2;
 	fill: none;
 	stroke-dasharray: 0;
@@ -13,7 +13,7 @@ path {
 }
 
 .area {
-  	fill: lightsteelblue;
+  	fill: #b1b1b1;
 }
 
 text {
@@ -30,18 +30,22 @@ line {
 }
 
 .data-point {
-	stroke: steelblue;
+	stroke: green;
 	stroke-width: 2;
 	fill: #FFF;
 }
 
 #user-chart {
         margin: 0;
-}
+    }
 
 body { overflow: hidden; }
 
-#progressbar { margin: 20px 225px 0px 35px; }
+#chart-container { 
+	width: 960px; 
+	margin: 0 auto;
+}
+
 .hidden { display: none; }
 
 #ranksettings .warn { 
@@ -51,9 +55,31 @@ body { overflow: hidden; }
 
 #ranksettings label { 
 	float: left; 
-	width: 150px; 
+	width: 100px; 
+	font-size: 12px;
+	text-align: right;
+	padding-right: 10px;
+	line-height: 25px;
+}
+
+#ranksettings input[type="submit"] {
+	float: right;
 }
 
 div.ui-datepicker{
  font-size:10px;
 }
+
+#settings { 
+	float: right; 
+}
+
+#datepicked { 
+	color: #609030; 
+	font-size: 12px;
+	margin-left: 40px;
+}
+	#datepicked:hover {
+		cursor: pointer;
+		text-decoration: underline;
+	}
