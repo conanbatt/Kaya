@@ -1,5 +1,56 @@
-var rankgraph = function(gamecount) {
 
+$(document).ready(function() {
+        $("#gamecount").keydown(function(event) {
+            if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+                 // Allow: Ctrl+A
+                (event.keyCode == 65 && event.ctrlKey === true) || 
+                 // Allow: home, end, left, right
+                (event.keyCode >= 35 && event.keyCode <= 39)) {
+                     return;
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+                    event.preventDefault(); 
+                    $('#gamecountwarn').fadeIn();
+                    setTimeout(function(){
+                        $('#gamecountwarn').fadeOut('slow');
+                    }, 3000);
+                }   
+            }
+        });
+        $(function() {
+                $( ".datepicker" ).datepicker();
+        });
+
+        $(".datepicker").focus( function () { $("#datepicked").fadeIn().html('<br />Clear dates'); });
+        $("#datepicked").click( function () { 
+            $(this).html('').hide(); 
+            $(".datepicker").val('');
+        });
+});
+
+function graphSettings(e) {
+	gamecountsubmit = $("input[name='gamecount']").val();
+	$("#user-chart").html('');
+	if (gamecountsubmit.length > 0) {
+		var gamecount = gamecountsubmit;
+	}
+	var graph_widget = new rankgraph(gamecount);
+	graph_widget.draw();
+	e.preventDefault();
+};
+
+//For Ie
+if (!window.console) {
+	window.console = {
+		log: function(str) {
+			//alert(str);
+		}
+	};
+}
+
+var rankgraph = function(gamecount) {
 		var gameCount = gamecount || 30;
 		var rankGraphPadding = 3;
 
@@ -11,7 +62,7 @@ var rankgraph = function(gamecount) {
 		var w = $("#user-chart").width(),
 			h = $(document).height() / 2;
 
-		var maxDataPointsForDots = ($("#user-chart").width()/6),
+		var maxDataPointsForDots = ($("#user-chart").width() / 6),
 			transitionDuration = 1000;
 
 		var svg = null,
@@ -19,6 +70,50 @@ var rankgraph = function(gamecount) {
 			xAxisGroup = null,
 			dataCirclesGroup = null,
 			dataLinesGroup = null;
+
+		function getData() {
+			var resultsArray = [];
+
+			// Fake data
+			var opponents = ["conanbatt", "dp", "Smar", "vui30h"];
+			var results = ["B+Resignation", "B+Resignation", "B+Nuclear Tesuji", "B+6.5"];
+			var ranges = ["-1.3", "-2.34", "-3.67", "-4.17", "-5.68", "-6.89", "-7.33", "-8.67", "-9.12", "-10.78"];
+
+
+			for (x = gameCount; x >= 1; x--) {
+				var gamelink = '<a href="http://beta.kaya.gs/gospeed/3588" target="_blank">View Game</a>'; // Game link
+				var date = new Date(); // Game Date
+				var newrank = ranges[Math.floor(Math.random() * ranges.length)]; // New Rank
+				var result = results[Math.floor(Math.random() * results.length)]; // Result
+				var opponent = opponents[Math.floor(Math.random() * opponents.length)]; // Opponent
+				date.setDate(date.getDate() - x);
+				date.setHours(0, 0, 0, 0);
+
+				resultsArray.push({
+					'gamelink': gamelink,
+					'value': (newrank - 5),
+					'date': date,
+					'result': result,
+					'opponent': opponent
+				});
+			}
+			// End fake data
+			return resultsArray;
+		}
+
+		// Not in use
+		// function doProgressBar() {
+		// 	var rankchange = rankChange();
+		// 	var currank = String(rankchange.current);
+		// 	var progress = Number(currank.substr(currank.length - 2));
+		// 	$("#progressbar").progressbar({
+		// 		value: progress
+		// 	});
+		// 	$("#progressbar-title span").html("");
+		// 	$("#progressbar-title span").append(progress + "% (" + rankchange.current + ")")
+		// }
+
+
 
 		this.draw = function() {
 			var data = getData();
@@ -174,58 +269,5 @@ var rankgraph = function(gamecount) {
 			};
 			return rankrange;
 		}
-
-		function getData() {
-			var resultsArray = [];
-
-			// Fake data
-			var opponents = ["conanbatt", "dp", "Smar", "vui30h"];
-			var results = ["B+Resignation", "B+Resignation", "B+Nuclear Tesuji", "B+6.5"];
-			var ranges = ["-1.3", "-2.34", "-3.67", "-4.17", "-5.68", "-6.89", "-7.33", "-8.67", "-9.12", "-10.78"];
-
-
-			for (x = gameCount; x >= 1; x--) {
-				var gamelink = '<a href="http://beta.kaya.gs/gospeed/3588" target="_blank">View Game</a>'; // Game link
-				var date = new Date(); // Game Date
-				var newrank = ranges[Math.floor(Math.random() * ranges.length)]; // New Rank
-				var result = results[Math.floor(Math.random() * results.length)]; // Result
-				var opponent = opponents[Math.floor(Math.random() * opponents.length)]; // Opponent
-				date.setDate(date.getDate() - x);
-				date.setHours(0, 0, 0, 0);
-
-				resultsArray.push({
-					'gamelink': gamelink,
-					'value': (newrank - 5),
-					'date': date,
-					'result': result,
-					'opponent': opponent
-				});
-			}
-			// End fake data
-			return resultsArray;
-		}
-
-		function doProgressBar() {
-			var rankchange = rankChange();
-			var currank = String(rankchange.current);
-			var progress = Number(currank.substr(currank.length - 2));
-			$("#progressbar").progressbar({
-				value: progress
-			});
-			$("#progressbar-title span").html("");
-			$("#progressbar-title span").append(progress + "% (" + rankchange.current + ")")
-		}
-
-
 	};
 
-function graphSettings(e) {
-	gamecountsubmit = $("input[name='gamecount']").val();
-	$("#user-chart").html('');
-	if (gamecountsubmit.length > 0) {
-		var gamecount = gamecountsubmit;
-	}
-	var graph_widget = new rankgraph(gamecount);
-	graph_widget.draw();
-	e.preventDefault();
-};

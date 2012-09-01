@@ -73,6 +73,9 @@ div.ui-datepicker{
 #settings { 
 	float: right; 
 }
+#settings div { 
+	margin-bottom: 5px;
+}
 
 #datepicked { 
 	color: #609030; 
@@ -83,3 +86,9 @@ div.ui-datepicker{
 		cursor: pointer;
 		text-decoration: underline;
 	}
+
+#gamecountwarn { 
+	position: absolute;
+	margin-left: -120px;
+	margin-top: -11px;
+}
