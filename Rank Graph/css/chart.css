@@ -85,7 +85,7 @@ div.ui-datepicker{
 		text-decoration: underline;
 	}
 
-#gamecountwarn { 
+#gamecountwarn, #usernamewarn { 
 	position: absolute;
 	margin-left: -120px;
 	margin-top: -11px;
