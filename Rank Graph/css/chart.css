@@ -39,8 +39,6 @@ line {
         margin: 0;
     }
 
-body { overflow: hidden; }
-
 #chart-container { 
 	width: 960px; 
 	margin: 0 auto;
@@ -92,3 +90,5 @@ div.ui-datepicker{
 	margin-left: -120px;
 	margin-top: -11px;
 }
+
+.data-point:hover { cursor: pointer; }

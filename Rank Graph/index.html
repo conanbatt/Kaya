@@ -3,16 +3,11 @@
 <head>
         <title>Rank Graph</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" href="../qunit/qunit.css" type="text/css" media="screen">
-        <script type="text/javascript" src="../qunit/qunit.js"></script>
+        <link rel="stylesheet" href="qunit/qunit.css" type="text/css" media="screen">
+        <script type="text/javascript" src="qunit/qunit.js"></script>
         <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
         <link type="text/css" href="css/chart.css" rel="stylesheet" />
         <link type="text/css" href="css/tipsy.css" rel="stylesheet" />
-        <!--[if lte IE 8]> 
-            <script type="text/javascript" src="js/sizzle/sizzle.js></script> 
-            <script type="text/javascript" src="js/ie8/compat.js></script> 
-        <![endif]--> 
-        <script type="text/javascript" src="js/raphael/raphael.js"></script> 
         <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.23.custom.min.js"></script>
         <script type="text/javascript" src="js/d3.v2.js"></script>
@@ -32,7 +27,7 @@
                 <h3 id="chart-title">Rating Graph<h3>
                         <div id="settings">
                                 <form method="post" action"" id="ranksettings">
-                                    <div>
+                                   <!--  <div>
                                         <label for="start">Start: </label>
                                         <input class="datepicker" type="text" value="" id="start" name="start" />
                                     </div>
@@ -40,6 +35,11 @@
                                         <label for="end">End: </label>
                                         <input class="datepicker" type="text" value="" id="end" name="end" />
                                         <span class="field-message hidden" id="datepicked"><br /></span>
+                                    </div> -->
+                                    <div>
+                                        <label for="username">Username:</label>
+                                        <input type="text/javascript" name="username" id="username" value="" />
+                                        <span id="usernamewarn" class="hidden warn"><br />Check your spelling!</span>
                                     </div>
                                     <div>
                                         <label for="gamecount">Gamecount:</label>
