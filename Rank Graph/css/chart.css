@@ -70,6 +70,7 @@ div.ui-datepicker{
 
 #settings { 
 	float: right; 
+	margin-right: 40px;
 }
 #settings div { 
 	margin-bottom: 5px;
@@ -92,3 +93,5 @@ div.ui-datepicker{
 }
 
 .data-point:hover { cursor: pointer; }
+
+#chart-title { margin-left: 40px; }
