@@ -39,16 +39,26 @@ if (!window.console) {
 	};
 }
 
+function graphSettings(e) {
+	gamecountsubmit = $("input[name='gamecount']").val();
+	usernamesubmit = $("input[name='username']").val();
+	console.log(gamecountsubmit);
+	console.log(usernamesubmit);
+	$("#user-chart").html('');
+	if (gamecountsubmit.length > 0 || usernamesubmit.length > 0) {
+		var gamecount = gamecountsubmit;
+		var username = usernamesubmit;
+	}
+	var graph_widget = new rankgraph(gamecount, username);
+	graph_widget.draw();
+	e.preventDefault();
+};
+
 var rankgraph = function(gamecount, username) {
 	
 	var gameCount = gamecount || 20; // Defaults
 	var userName = username || 'Smar'; // Defaults
 	var rankGraphPadding = 3;
-
-	var gameHistoryLength = [];
-	for (var i = 1; i <= gameCount; i++) {
-		gameHistoryLength.push(i);
-	}
 
 	var w = $("#user-chart").width(),
 		h = $(document).height() / 2;
@@ -64,76 +74,32 @@ var rankgraph = function(gamecount, username) {
 
 	function getData() {
 		var resultsArray = [];
-
-		// $.get("data-request.php?username=" + userName + "&gamecount=" + gameCount, function(data) {
-			
-			// console.log("Username: " + userName + " - Data: " + data);
+		console.log(userName);
+		if(userName == 'conanbatt') {
+	 		data = [{"id":"4354","black_player":"aleski","white_player":"conanbatt","black_rank":"12k","white_rank":"6d","datetime_played":"2012-09-01 16:22:12","result":"W+16.5"},{"id":"4280","black_player":"Neutron","white_player":"conanbatt","black_rank":"7k","white_rank":"6d","datetime_played":"2012-09-01 01:54:34","result":"B+Resignation"},{"id":"4271","black_player":"dp","white_player":"conanbatt","black_rank":"10k","white_rank":"6d","datetime_played":"2012-08-31 23:39:53","result":"W+Resignation"},{"id":"4264","black_player":"conanbatt","white_player":"dp","black_rank":"6d","white_rank":"10k","datetime_played":"2012-08-31 22:40:22","result":"W+Resignation"},{"id":"4166","black_player":"jv","white_player":"conanbatt","black_rank":"3d","white_rank":"6d","datetime_played":"2012-08-31 01:19:29","result":"B+Resignation"},{"id":"4165","black_player":"jv","white_player":"conanbatt","black_rank":"3d","white_rank":"6d","datetime_played":"2012-08-31 01:05:17","result":"B+Resignation"},{"id":"4161","black_player":"Jermelle","white_player":"conanbatt","black_rank":"21k","white_rank":"6d","datetime_played":"2012-08-31 00:06:59","result":"W+Resignation"},{"id":"4135","black_player":"Lior","white_player":"conanbatt","black_rank":"4d","white_rank":"6d","datetime_played":"2012-08-30 19:32:22","result":"B+Time"},{"id":"4114","black_player":"KurataKun","white_player":"conanbatt","black_rank":"2d","white_rank":"6d","datetime_played":"2012-08-30 17:42:39","result":"W+Resignation"},{"id":"3992","black_player":"KurataKun","white_player":"conanbatt","black_rank":"2d","white_rank":"7d","datetime_played":"2012-08-30 17:42:39","result":"W+Resignation"},{"id":"4039","black_player":"Kanin","white_player":"conanbatt","black_rank":"5d","white_rank":"6d","datetime_played":"2012-08-30 00:33:18","result":"W+Resignation"},{"id":"3904","black_player":"Kanin","white_player":"conanbatt","black_rank":"5d","white_rank":"7d","datetime_played":"2012-08-30 00:33:18","result":"W+Resignation"},{"id":"3903","black_player":"newbold","white_player":"conanbatt","black_rank":"18k","white_rank":"7d","datetime_played":"2012-08-29 23:31:37","result":"W+162.5"},{"id":"3900","black_player":"rsun","white_player":"conanbatt","black_rank":"2d","white_rank":"7d","datetime_played":"2012-08-29 22:26:56","result":"W+Time"},{"id":"3895","black_player":"rsun","white_player":"conanbatt","black_rank":"2d","white_rank":"6d","datetime_played":"2012-08-29 21:05:19","result":"W+10.5"},{"id":"3893","black_player":"Fabricio","white_player":"conanbatt","black_rank":"2k","white_rank":"6d","datetime_played":"2012-08-29 20:36:56","result":"W+Resignation"},{"id":"3884","black_player":"rsun","white_player":"conanbatt","black_rank":"2d","white_rank":"6d","datetime_played":"2012-08-29 18:31:28","result":"W+Time"},{"id":"3883","black_player":"rsun","white_player":"conanbatt","black_rank":"3d","white_rank":"6d","datetime_played":"2012-08-29 18:31:28","result":"W+Time"},{"id":"3813","black_player":"Kanin","white_player":"conanbatt","black_rank":"6d","white_rank":"6d","datetime_played":"2012-08-29 00:37:58","result":"B+12.5"},{"id":"3786","black_player":"Pempu","white_player":"conanbatt","black_rank":"2d","white_rank":"6d","datetime_played":"2012-08-28 18:21:49","result":"W+27.5"}];
+	 	} else {
 			data = [{"id":"4380","black_player":"sadmac","white_player":"Smar","black_rank":"16k","white_rank":"9k","datetime_played":"2012-09-01 21:11:57","result":"W+Resignation"},{"id":"4372","black_player":"Smar","white_player":"gekko","black_rank":"9k","white_rank":"6k","datetime_played":"2012-09-01 19:27:30","result":"B+Forfeit"},{"id":"4364","black_player":"Benyaiol","white_player":"Smar","black_rank":"15k","white_rank":"9k","datetime_played":"2012-09-01 19:03:02","result":"B+Resignation"},{"id":"4234","black_player":"Smar","white_player":"Oceandrop","black_rank":"9k","white_rank":"8k","datetime_played":"2012-08-31 16:38:12","result":"W+35.5"},{"id":"4230","black_player":"Smar","white_player":"Oceandrop","black_rank":"9k","white_rank":"8k","datetime_played":"2012-08-31 15:21:58","result":"B+Resignation"},{"id":"4138","black_player":"Smar","white_player":"Tristan","black_rank":"9k","white_rank":"8k","datetime_played":"2012-08-30 19:59:03","result":"W+Resignation"},{"id":"4057","black_player":"Smar","white_player":"chunqiu","black_rank":"9k","white_rank":"3k","datetime_played":"2012-08-30 14:07:38","result":"W+33.5"},{"id":"3933","black_player":"Smar","white_player":"chunqiu","black_rank":"9k","white_rank":"3k","datetime_played":"2012-08-30 14:07:38","result":"W+33.5"},{"id":"3867","black_player":"fournierse","white_player":"Smar","black_rank":"11k","white_rank":"9k","datetime_played":"2012-08-29 14:30:29","result":"W+Resignation"},{"id":"3711","black_player":"Smar","white_player":"Oceandrop","black_rank":"9k","white_rank":"8k","datetime_played":"2012-08-27 17:26:24","result":"B+Resignation"},{"id":"3589","black_player":"Boidhre","white_player":"Smar","black_rank":"11k","white_rank":"9k","datetime_played":"2012-08-25 21:55:12","result":"B+Resignation"},{"id":"3583","black_player":"Smar","white_player":"conanbatt","black_rank":"9k","white_rank":"6d","datetime_played":"2012-08-25 19:28:49","result":"W+36.5"},{"id":"3513","black_player":"Boidhre","white_player":"Smar","black_rank":"12k","white_rank":"9k","datetime_played":"2012-08-24 21:06:18","result":"B+69.5"},{"id":"3508","black_player":"Boidhre","white_player":"Smar","black_rank":"12k","white_rank":"9k","datetime_played":"2012-08-24 20:12:35","result":"W+45.5"},{"id":"3485","black_player":"Smar","white_player":"Oceandrop","black_rank":"10k","white_rank":"8k","datetime_played":"2012-08-24 17:19:04","result":"W+42.5"},{"id":"3449","black_player":"farful","white_player":"Smar","black_rank":"9k","white_rank":"9k","datetime_played":"2012-08-24 13:22:40","result":"B+Resignation"},{"id":"3373","black_player":"Smar","white_player":"Oceandrop","black_rank":"9k","white_rank":"9k","datetime_played":"2012-08-23 19:06:20","result":"B+0.5"},{"id":"3305","black_player":"Boidhre","white_player":"Smar","black_rank":"12k","white_rank":"9k","datetime_played":"2012-08-23 12:36:04","result":"W+19.5"},{"id":"3297","black_player":"Mixerman","white_player":"Smar","black_rank":"12k","white_rank":"10k","datetime_played":"2012-08-23 11:42:58","result":"W+Resignation"},{"id":"3084","black_player":"Smar","white_player":"farful","black_rank":"10k","white_rank":"9k","datetime_played":"2012-08-22 17:43:38","result":"W+Resignation"}];
-			// console.log(data);
-			$.each(data, function(keys, values) {
-					var gamelink = '<a href="http://beta.kaya.gs/gospeed/' + values['id'] + '" target="_blank">View Game</a>'; 
-					// console.log(values['white_player'] + " : " + userName);
-					if(values['white_player'] == userName) {
-						var newrank = values['white_rank'].substring(0, values['white_rank'].length - 1);
-						var opponent = values['black_player']; ; 
-					} else {
-						var newrank = values['white_rank'].substring(0, values['white_rank'].length - 1);
-						var opponent = values['white_player']; ; 
-					}
-					var date = new Date(values['datetime_played']); 
-					var result = values['result']; 
-
-					resultsArray.push({
-						'gamelink': gamelink,
-						'value': (newrank - 5),
-						'date': date,
-						'result': result,
-						'opponent': opponent
-					});
-			});
-			// console.log(resultsArray);
-			return resultsArray;
-		// });
-	}
-
-	function rankChange() {
-		var rankrange = [];
-		var data = getData();
-
-		for (var key in data) {
-			var obj = data[key];
-			for (var prop in obj) {
-				if (prop == 'value') {
-					var rank = obj[prop];
-
-					if (biggest == undefined) {
-						var biggest = rank;
-					}
-					if (smallest == undefined) {
-						var smallest = rank;
-					}
-
-					if (rank > biggest) {
-						var biggest = rank;
-					}
-					if (rank < smallest) {
-						smallest = rank;
-					}
-				}
-			}
 		}
 
-		rankrange = {
-			"smallest": smallest,
-			"biggest": biggest,
-			"current": rank.toFixed(2)
-		};
-		return rankrange;
+		$.each(data, function(keys, values) {
+			var gamelink = '<a href="http://beta.kaya.gs/gospeed/' + values['id'] + '" target="_blank">View Game</a>'; 
+			if(values['white_player'] == userName) {
+				var newrank = values['white_rank'].substring(0, values['white_rank'].length - 1);
+				var opponent = values['black_player']; ; 
+			} else {
+				var newrank = values['white_rank'].substring(0, values['white_rank'].length - 1);
+				var opponent = values['white_player']; ; 
+			}
+			var date = new Date(values['datetime_played']); 
+			var result = values['result']; 
+
+			resultsArray.push({'gamelink': gamelink,'value': Number(newrank),'date': date,'result': result,'opponent': opponent});
+		});
+		return resultsArray;
 	}
 
 	this.draw = function() {
 		var data = getData();
-		console.log(data);
 		var rankrange = rankChange();
 		var margin = 40;
 		var max = (rankrange.biggest + rankGraphPadding);
@@ -249,17 +215,40 @@ var rankgraph = function(gamecount, username) {
 			}
 		});
 	}
+
+	function rankChange() {
+		var rankrange = [];
+		var data = getData();
+
+		for (var key in data) {
+			var obj = data[key];
+			for (var prop in obj) {
+				if (prop == 'value') {
+					var rank = obj[prop];
+
+					if (biggest == undefined) {
+						var biggest = rank;
+					}
+					if (smallest == undefined) {
+						var smallest = rank;
+					}
+
+					if (rank > biggest) {
+						var biggest = rank;
+					}
+					if (rank < smallest) {
+						smallest = rank;
+					}
+				}
+			}
+		}
+
+		rankrange = {
+			"smallest": smallest,
+			"biggest": biggest,
+			"current": rank.toFixed(2)
+		};
+		return rankrange;
+	}
 };
 
-function graphSettings(e) {
-	gamecountsubmit = $("input[name='gamecount']").val();
-	usernamesubmit = $("input[name='username']").val();
-	$("#user-chart").html('');
-	if (gamecountsubmit.length > 0) {
-		var gamecount = gamecountsubmit;
-		var username = usernamesubmit;
-	}
-	var graph_widget = new rankgraph(gamecount, username);
-	graph_widget.draw();
-	e.preventDefault();
-};
