@@ -4,9 +4,7 @@ mock_games2 = []
 
 test("Should be able to output a graph", function() {
 
-
-    my_graph = new RankGraph('user-chart') //just the element id
-    my_graph.draw(mock_games);
+    $("#user-chart").rank_graph(mock_games);
 
     ok($("#user-chart").html().length > 0);
 });
@@ -14,20 +12,19 @@ test("Should be able to output a graph", function() {
 test("Should do some basic validation", function(){
 
     raise( function(){ 
-        my_graph = new RankGraph('inexistent')
+        $("#inexistent").rank_graph(mock_games);
     }, Error, "Element with id inexistent must exist");
 
 })
 
 test("Should be able to re-draw the same graph with another data", function(){
 
-    my_graph = new RankGraph('user-chart')
-    my_graph.draw(mock_games)
+    $("#user-chart").rank_graph(mock_games);
 
-    ok($("#some_mock_game_id").length)
+    ok($("#some_mock_game_id").length) // Or however wecan locate an aelement added by the drawer
 
-    my_graph.draw(mock_games2)
+    $("#user-chart").rank_graph(mock_games2);
 
-    ok(!$("#some_mock_game_id").length)
+    ok(!$("#some_mock_game_id").length) // The previous element should not be drawn anymore
     ok($("#mock_id_from_second_batch").length)
 })
